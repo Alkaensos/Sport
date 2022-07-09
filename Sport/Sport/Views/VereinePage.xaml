@@ -1,38 +1,36 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="Sport.Views.ItemsPage"
+             x:Class="Sport.Views.VereinePage"
              Title="{Binding Title}"
              xmlns:local="clr-namespace:Sport.ViewModels"  
-             xmlns:model="clr-namespace:Sport.Models" x:DataType="local:ItemsViewModel"
-             x:Name="BrowseItemsPage">
-
+             xmlns:model="clr-namespace:Sport.Models" x:DataType="local:VereineViewModel"
+             x:Name="BrowseVereinePage">
+             
     <ContentPage.ToolbarItems>
-        <ToolbarItem Text="Add" Command="{Binding AddItemCommand}" />
+        <ToolbarItem Text="Add" Command="{Binding AddVereinCommand}" />
     </ContentPage.ToolbarItems>
-    <!--
-      x:DataType enables compiled bindings for better performance and compile time validation of binding expressions.
-      https://docs.microsoft.com/xamarin/xamarin-forms/app-fundamentals/data-binding/compiled-bindings
-    -->
-    <RefreshView x:DataType="local:ItemsViewModel" Command="{Binding LoadItemsCommand}" IsRefreshing="{Binding IsBusy, Mode=TwoWay}">
-        <CollectionView x:Name="ItemsListView"
-                ItemsSource="{Binding Items}"
+
+
+    <RefreshView x:DataType="local:VereineViewModel" Command="{Binding LoadVereineCommand}" IsRefreshing="{Binding IsBusy, Mode=TwoWay}">
+        <CollectionView x:Name="VereineListView"
+                ItemsSource="{Binding Vereine}"
                 SelectionMode="None">
             <CollectionView.ItemTemplate>
                 <DataTemplate>
-                    <StackLayout Padding="10" x:DataType="model:Item">
-                        <Label Text="{Binding Text}" 
+                    <StackLayout Padding="10" x:DataType="model:Verein">
+                        <Label Text="{Binding Name}" 
                             LineBreakMode="NoWrap" 
                             Style="{DynamicResource ListItemTextStyle}" 
                             FontSize="16" />
-                        <Label Text="{Binding Description}" 
+                        <Label Text="{Binding Teilnehmer}" 
                             LineBreakMode="NoWrap"
                             Style="{DynamicResource ListItemDetailTextStyle}"
                             FontSize="13" />
                         <StackLayout.GestureRecognizers>
                             <TapGestureRecognizer 
                                 NumberOfTapsRequired="1"
-                                Command="{Binding Source={RelativeSource AncestorType={x:Type local:ItemsViewModel}}, Path=ItemTapped}"		
+                                Command="{Binding Source={RelativeSource AncestorType={x:Type local:VereineViewModel}}, Path=VereinTabbed}"		
                                 CommandParameter="{Binding .}">
                             </TapGestureRecognizer>
                         </StackLayout.GestureRecognizers>

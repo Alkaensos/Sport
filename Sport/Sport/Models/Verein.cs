@@ -9,6 +9,7 @@ namespace Sport.Models
     {
         [PrimaryKey,AutoIncrement]
         public int Id { get; set; }
+        public string Name { get; set; }
         public int Leiter { get; set; }
         public int Teilnehmer { get; set; }
     }

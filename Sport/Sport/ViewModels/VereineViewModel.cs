@@ -1,4 +1,5 @@
 ﻿using Sport.Models;
+using Sport.Views;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -11,15 +12,21 @@ namespace Sport.ViewModels
 {
     public class VereineViewModel : BaseViewModel
     {
-        private Verein _SelectedItem;
+        private Verein _SelectedVerein;
         public ObservableCollection<Verein> Vereine { get; }
         public Command LoadVereineCommand { get; }
+        public Command AddVereinCommand { get; }
+        public Command VereinTapped { get; }
 
         public VereineViewModel()
         {
             Title = "Vereine";
             Vereine = new ObservableCollection<Verein>();
             LoadVereineCommand = new Command(async () => await ExecuteLoadVereineCommand());
+
+            VereinTapped = new Command<Verein>(OnItemSelected);
+
+            AddVereinCommand = new Command(OnAddItem);
         }
 
         async Task ExecuteLoadVereineCommand()
@@ -43,6 +50,32 @@ namespace Sport.ViewModels
             {
                 IsBusy = false;
             }
+        }
+        public void OnAppearing()
+        {
+            IsBusy = true;
+            SelectedVerein = null;
+        }
+        public Verein SelectedVerein
+        {
+            get => _SelectedVerein;
+            set
+            {
+                SetProperty(ref _SelectedVerein, value);
+                OnItemSelected(value);
+            }
+        }
+        async void OnItemSelected(Verein verein)
+        {
+            if (verein == null)
+                return;
+
+            // This will push the ItemDetailPage onto the navigation stack
+            await Shell.Current.GoToAsync($"{nameof(ItemDetailPage)}?{nameof(ItemDetailViewModel.ItemId)}={verein.Id}");
+        }
+        private async void OnAddItem(object obj)
+        {
+            await Shell.Current.GoToAsync(nameof(NewItemPage));
         }
     }
 }
