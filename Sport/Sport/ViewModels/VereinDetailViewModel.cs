@@ -15,7 +15,7 @@ namespace Sport.ViewModels
     {
         private string name;
         private int teilnehmer;
-        private string vereinId;
+        private int vereinId;
         public string Id { get; set; }
 
         public VereinDetailViewModel()
@@ -25,7 +25,7 @@ namespace Sport.ViewModels
             this.PropertyChanged +=
                 (_, __) => SaveCommand.ChangeCanExecute();
         }
-        public string VereinId
+        public int VereinId
         {
             get { return vereinId; }
             set 
@@ -50,12 +50,12 @@ namespace Sport.ViewModels
         public Command SaveCommand { get; }
         public Command CancelCommand { get; }
 
-        public async void LoadVereinId(string id)
+        public async void LoadVereinId(int Id)
         {
             try
             {
-                var verein = await VereinStore.GetItemAsync(id);
-                VereinId = verein.Id.ToString();
+                var verein = await VereinStore.GetItemAsync(this.Id);
+                VereinId = verein.Id;
                 Name = verein.Name;
                 Teilnehmer = verein.Teilnehmer;
             }
