@@ -11,29 +11,44 @@ namespace Sport.ViewModels
 {
     public class NewVereinViewModel : BaseViewModel
     {
-        public int Id { get; set; }
+        private string name;
+        private int teilnehmer;
 
-        private string _name;
-        private int _Teilnehmer;
-        private int _Leiter;
-
-        public NewVereinViewModel(Verein verein)
+        public NewVereinViewModel()
         {
-            Id = verein.Id;
-            _name = verein.Name;
-            _Teilnehmer = verein.Teilnehmer;
-            _Leiter = verein.Leiter;
-
+            SaveCommand = new Command(OnSave);
+            CancelCommand = new Command(OnCancel);
+            this.PropertyChanged +=
+                (_, __) => SaveCommand.ChangeCanExecute();
         }
         public string Name
         {
-            get { return _name; }
-            set { _name = value; }
+            get { return name; }
+            set { name = value; }
         }
         public int Teilnehmer
         {
-            get { return _Teilnehmer; }
-            set { _Teilnehmer = value; }
+            get { return teilnehmer; }
+            set { teilnehmer = value; }
+        }
+
+        public Command SaveCommand { get; }
+        public Command CancelCommand { get; }
+
+        private async void OnCancel()
+        {
+            await Shell.Current.GoToAsync("..");
+        }
+
+        private async void OnSave()
+        {
+            Verein newVerein = new Verein()
+            {
+                Name = Name,
+                Teilnehmer = Teilnehmer
+            };
+            await VereinStore.AddItemAsync(newVerein);
+            await Shell.Current.GoToAsync("..");
         }
 
     }

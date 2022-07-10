@@ -3,33 +3,35 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Sport.Models;
-using System;
 using System.Diagnostics;
 using System.Threading.Tasks;
 using Xamarin.Forms;
+using Sport.ViewModels;
+using Sport.Services;
 
 namespace Sport.ViewModels
 {
-    [QueryProperty(nameof(VereinStore), nameof(Name))]
     public class VereinDetailViewModel : BaseViewModel
     {
-        private int id;
+        private string itemId;
         private string name;
-        private int Teilnehmer;
-
-        
-
-        public int Id { get; set; }
+        private string teilnehmer;
+        public string Id
+        {
+            get { return itemId; }
+            set { itemId = value; }
+        }
 
         public string Name
         {
-            get { return name; }
-            set { name = value; }
+            get => name;
+            set => SetProperty(ref name, value);
         }
-        public int teilnehmer
+
+        public string Teilnehmer
         {
-            get { return Teilnehmer; }
-            set { Teilnehmer = value;  }
+            get { return teilnehmer; }
+            set { teilnehmer = value;  }
         }
 
     }

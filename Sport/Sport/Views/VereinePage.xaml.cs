@@ -15,17 +15,17 @@ namespace Sport.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class VereinePage : ContentPage
     {
-        VereineViewModel _VereineviewModel;
+        VereineViewModel _VereineViewModel;
         public VereinePage()
         {
             InitializeComponent();
 
-            BindingContext = _VereineviewModel = new VereineViewModel();
+            BindingContext = _VereineViewModel = new VereineViewModel();
         }
         protected override void OnAppearing()
         {
             base.OnAppearing();
-            _VereineviewModel.OnAppearing();
+            _VereineViewModel.OnAppearing();
         }
     }
 }

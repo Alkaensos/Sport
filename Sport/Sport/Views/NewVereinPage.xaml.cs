@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Sport.Models;
+using Sport.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,6 +17,7 @@ namespace Sport.Views
         public NewVereinPage()
         {
             InitializeComponent();
+            BindingContext = new NewVereinViewModel();
         }
     }
 }
