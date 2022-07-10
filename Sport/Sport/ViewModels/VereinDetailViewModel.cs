@@ -13,16 +13,24 @@ namespace Sport.ViewModels
 {
     public class VereinDetailViewModel : BaseViewModel
     {
-        private string itemId;
         private string name;
-        private string Leiter;
-        private string teilnehmer;
-        public string Id
+        private int teilnehmer;
+        private string vereinId;
+        public string Id { get; set; }
+
+        public VereinDetailViewModel()
         {
-            get { return itemId; }
+            SaveCommand = new Command(OnSave);
+            CancelCommand = new Command(OnCancel);
+            this.PropertyChanged +=
+                (_, __) => SaveCommand.ChangeCanExecute();
+        }
+        public string VereinId
+        {
+            get { return vereinId; }
             set 
             {
-                itemId = value;
+                vereinId = value;
                 LoadVereinId(value);
             }
         }
@@ -33,26 +41,43 @@ namespace Sport.ViewModels
             set => SetProperty(ref name, value);
         }
 
-        public string Teilnehmer
+        public int Teilnehmer
         {
             get { return teilnehmer; }
-            set { teilnehmer = value;  }
+            set { teilnehmer = value; }
         }
+
+        public Command SaveCommand { get; }
+        public Command CancelCommand { get; }
 
         public async void LoadVereinId(string id)
         {
             try
             {
                 var verein = await VereinStore.GetItemAsync(id);
-                Id = verein.Id.ToString();
+                VereinId = verein.Id.ToString();
                 Name = verein.Name;
-                Leiter = verein.Leiter.ToString();
-                Teilnehmer = verein.Teilnehmer.ToString();
+                Teilnehmer = verein.Teilnehmer;
             }
             catch (Exception)
             {
                 Debug.WriteLine("Failed to Load Verein");
             }
+        }
+        private async void OnCancel()
+        {
+            await Shell.Current.GoToAsync("..");
+        }
+
+        private async void OnSave()
+        {
+            Verein UpdateVerein = new Verein()
+            {
+                Name = Name,
+                Teilnehmer = Teilnehmer
+            };
+            await VereinStore.UpdateItemAsync(UpdateVerein);
+            await Shell.Current.GoToAsync("..");
         }
     }
 }

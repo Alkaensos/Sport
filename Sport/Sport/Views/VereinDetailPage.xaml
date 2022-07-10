@@ -2,15 +2,21 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
              xmlns:viewmodels="clr-namespace:Sport.ViewModels"
-             x:DataType="viewmodels:NewVereinViewModel"
+             x:DataType="viewmodels:VereinDetailViewModel"
              x:Class="Sport.Views.VereinDetailPage"
              Title="{Binding Title}">
 
     <StackLayout Spacing="20" Padding="15">
-        <Label Text="Text:" FontSize="Medium" />
-        <Label Text="{Binding Name}" FontSize="Small"/>
+        <Label Text="Identifikation:" FontSize="Medium" />
+        <Label Text="{Binding Id, Mode=OneWay}" FontSize="Small"/>
+        <Label Text="Name des Vereins:" FontSize="Medium" />
+        <Entry Text="{Binding Name, Mode=TwoWay}" FontSize="Small"/>
         <Label Text="Description:" FontSize="Medium" />
-        <Label Text="{Binding Teilnehmer}" FontSize="Small"/>
+        <Entry Text="{Binding Teilnehmer, Mode=TwoWay}" FontSize="Small"/>
+        <StackLayout Orientation="Horizontal">
+            <Button Text="Cancel" Command="{Binding CancelCommand}" HorizontalOptions="FillAndExpand"></Button>
+            <Button Text="Save" Command="{Binding SaveCommand}" HorizontalOptions="FillAndExpand"></Button>
+        </StackLayout>
     </StackLayout>
 
 </ContentPage>

@@ -71,7 +71,7 @@ namespace Sport.ViewModels
                 return;
 
             // This will push the ItemDetailPage onto the navigation stack
-            await Shell.Current.GoToAsync($"{nameof(VereinDetailPage)}?{nameof(VereinDetailViewModel.Id)}={verein.Id}");
+            await Shell.Current.GoToAsync($"{nameof(VereinDetailPage)}?{nameof(VereinDetailViewModel.VereinId)}={verein.Id}");
         }
         private async void OnAddItem(object obj)
         {
