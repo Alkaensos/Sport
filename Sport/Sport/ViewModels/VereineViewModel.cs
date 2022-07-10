@@ -16,7 +16,7 @@ namespace Sport.ViewModels
         public ObservableCollection<Verein> Vereine { get; }
         public Command LoadVereineCommand { get; }
         public Command AddVereinCommand { get; }
-        public Command VereinTapped { get; }
+        public Command<Verein> VereinTapped { get; }
 
         public VereineViewModel()
         {

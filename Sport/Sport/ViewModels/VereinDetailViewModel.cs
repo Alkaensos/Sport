@@ -15,11 +15,16 @@ namespace Sport.ViewModels
     {
         private string itemId;
         private string name;
+        private string Leiter;
         private string teilnehmer;
         public string Id
         {
             get { return itemId; }
-            set { itemId = value; }
+            set 
+            {
+                itemId = value;
+                LoadVereinId(value);
+            }
         }
 
         public string Name
@@ -34,5 +39,20 @@ namespace Sport.ViewModels
             set { teilnehmer = value;  }
         }
 
+        public async void LoadVereinId(string id)
+        {
+            try
+            {
+                var verein = await VereinStore.GetItemAsync(id);
+                Id = verein.Id.ToString();
+                Name = verein.Name;
+                Leiter = verein.Leiter.ToString();
+                Teilnehmer = verein.Teilnehmer.ToString();
+            }
+            catch (Exception)
+            {
+                Debug.WriteLine("Failed to Load Verein");
+            }
+        }
     }
 }
